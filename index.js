@@ -4,7 +4,7 @@ const xssClean = require("xss-clean");
 const morgan = require("morgan");
 const cors = require("cors");
 const bodyParser = require('body-parser')
-const Router = require("./src/router")
+const Router = require("./src/routes")
 const app = express();
 const port = 3000;
 
@@ -17,7 +17,6 @@ const corsOption = {
 }
 
 app.use(cors(corsOption))
-
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(morgan("combined"))

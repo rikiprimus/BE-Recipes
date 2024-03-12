@@ -8,6 +8,7 @@ const {
     updateRecipe,
     deleteRecipe,
 } = require("../model/recipes");
+const cloadinary = require("../config/cloadinary")
 
 const RecipesController = {
     getRecipeDetail: async (req, res, next) => {
@@ -21,9 +22,9 @@ const RecipesController = {
                 }
             }
 			// check sortBy
-			let sortBy = 'created_at'
+			let sortBy = 'createdAt'
             if (req.query.sortBy) {
-                const validSortByValues = ["created_at", "updated_at"];
+                const validSortByValues = ["createdAt", "updatedAt"];
                 if(validSortByValues.includes(req.query.sortBy)){
                     sortBy = req.query.sortBy
                 }
@@ -115,20 +116,17 @@ const RecipesController = {
     },
     InputRecipe: async (req, res, next) => {
         try {
-            let { title, ingredient, photo, video, category } = req.body;
-            if (
-                !title ||
-                title === "" ||
-                !ingredient ||
-                ingredient === "" ||
-                !photo || 
-                photo === "" || 
-                !video || 
-                video === "" 
-            ) {
-                return res.json({ code: 404, message: "input invalid" });
+            const imageUrl = await cloadinary.uploader.upload(req.file.path,{folder:'my_folder_BE'})
+            if(!imageUrl){
+                return res.status(404).json({status:404, message:`input data image failed`})
             }
-            let data = { id: uuidv4(), title, ingredient, photo, video, category };
+            
+            let photo = imageUrl.secure_url
+            let users_id = req.payload.id
+            let { title, ingredient, video, category_id } = req.body;
+            // console.log(title)
+            
+            let data = { id: uuidv4(), title, ingredient, photo, video, users_id, category_id };
             let result = await createRecipe(data);
             if (result.rowCount === 1) {
                 return res
@@ -148,12 +146,18 @@ const RecipesController = {
     },
     PutRecipe: async (req, res, next) => {
         try {
+            const imageUrl = await cloadinary.uploader.upload(req.file.path,{folder:'my_folder_BE'})
+            if(!imageUrl){
+                return res.status(404).json({status:404, message:`input data image failed`})
+            }
+
             // check params & body
             let { id } = req.params;
             if (id === "") {
                 return res.status(404).json({ message: "params id invalid" });
             }
-            let { title, ingredient, photo, video, category } = req.body;
+            let photo = imageUrl.secure_url
+            let { title, ingredient, video, category_id } = req.body;
             // check recipe
             let recipes = await getRecipeByIdModel(id);
             let resultRecipe = recipes.rows;
@@ -169,7 +173,7 @@ const RecipesController = {
                 ingredient: ingredient || recipe.ingredient,
                 photo: photo || recipe.photo,
                 video: video || recipe.video,
-                category: category || recipe.category,
+                category_id: category_id || recipe.category_id,
             };
 
             let result = await updateRecipe(data);

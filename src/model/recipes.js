@@ -58,10 +58,10 @@ const getRecipeByIdModel = async (id) => {
 
 const createRecipe = async (data) => {
 	console.log("model - createRecipe")
-	let {id,title,ingredient,photo,video,category} = data
+	let {id,title,ingredient,photo,video,users_id,category_id} = data
 	console.log(data)
 	return new Promise((resolve,reject)=>
-		Pool.query(`INSERT INTO recipes (id,title,ingredient,photo,video,category,created_at) VALUES ('${id}','${title}','${ingredient}','${photo}','${video}','${category}',NOW());`,(err,res)=>{
+		Pool.query(`INSERT INTO recipes (id,title,ingredient,photo,video,users_id,category_id,createdAt) VALUES ('${id}','${title}','${ingredient}','${photo}','${video}','${users_id}','${category_id}',NOW());`,(err,res)=>{
 			if(!err){
 				return resolve(res)
 			} else {
@@ -74,10 +74,10 @@ const createRecipe = async (data) => {
 
 const updateRecipe = async (data) => {
 	console.log("model - updateRecipe")
-	let {id,title,ingredient,photo,video,category} = data
+	let {id,title,ingredient,photo,video,category_id} = data
 	console.log(data)
 	return new Promise((resolve,reject)=>
-		Pool.query(`UPDATE recipes SET updated_at=NOW(), title='${title}', ingredient='${ingredient}', photo='${photo}', video='${video}', category='${category}' WHERE id='${id}'`,(err,res)=>{
+		Pool.query(`UPDATE recipes SET updatedAt=NOW(), title='${title}', ingredient='${ingredient}', photo='${photo}', video='${video}', category_id='${category_id}' WHERE id='${id}'`,(err,res)=>{
 			if(!err){
 				return resolve(res)
 			} else {

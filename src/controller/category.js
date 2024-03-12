@@ -27,16 +27,14 @@ const CategoryController = {
     },
     InputCategory: async (req, res, next) => {
         try {
-            let { name, description } = req.body;
+            let { name } = req.body;
             if (
                 !name ||
-                name === "" ||
-                !description ||
-                description === ""
+                name === ""
             ) {
                 return res.json({ code: 404, message: "input invalid" });
             }
-            let data = { id: uuidv4(), name, description };
+            let data = { id: uuidv4(), name };
             let result = await createCategory(data);
             if (result.rowCount === 1) {
                 return res
@@ -62,7 +60,7 @@ const CategoryController = {
             if (id === "") {
                 return res.status(404).json({ message: "params id invalid" });
             }
-            let { name, description } = req.body;
+            let { name } = req.body;
             // check Category
             let categorys = await getCategoryByIdModel(id);
             let resultCategory = categorys.rows;
@@ -74,8 +72,7 @@ const CategoryController = {
             let category = resultCategory[0];
             let data = {
                 id,
-                name: name || category.name,
-                description: description || category.description,
+                name: name || category.name
             };
 
             let result = await updateCategory(data);

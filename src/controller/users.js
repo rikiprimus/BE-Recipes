@@ -28,7 +28,8 @@ const UsersController = {
 
     getUserById: async (req, res, next) => {
         try {
-            let { id } = req.params;
+            let { id } = req.payload;
+            console.log(id)
             if (id === "") {
                 return res.status(404).json({ message: "params id invalid" });
             }
@@ -54,7 +55,7 @@ const UsersController = {
 
     InputUser: async (req, res, next) => {
         try {
-            let { name, phone, email, password } = req.body;
+            let { name, phone, email, password, photo_profile, bio } = req.body;
             if (
                 !name ||
                 name === "" ||
@@ -67,7 +68,7 @@ const UsersController = {
             ) {
                 return res.json({ code: 404, message: "input invalid" });
             }
-            let data = { id: uuidv4(), name, phone, email, password };
+            let data = { id: uuidv4(), name, phone, email, password, photo_profile, bio };
             let result = await createUser(data);
             if (result.rowCount === 1) {
                 return res
@@ -89,11 +90,11 @@ const UsersController = {
     PutUser: async (req, res, next) => {
         try {
             // check params & body
-            let { id } = req.params;
+            let { id } = req.payload;
             if (id === "") {
                 return res.status(404).json({ message: "params id invalid" });
             }
-            let { name, phone, email, password } = req.body;
+            let { name, phone, email, password, photo_profile, bio } = req.body;
             // check User
             let users = await getUserByIdModel(id);
             let resultUser = users.rows;
@@ -109,6 +110,8 @@ const UsersController = {
                 phone: phone || user.phone,
                 email: email || user.email,
                 password: password || user.password,
+                photo_profile: photo_profile || user.photo_profile,
+                bio: bio || user.bio,
             };
 
             let result = await updateUser(data);
@@ -130,7 +133,7 @@ const UsersController = {
     DeleteUser: async(req, res, next) => {
         try {
             // check params & body
-            let { id } = req.params;
+            let { id } = req.payload;
             if (!id) {
                 return res.status(404).json({ message: "params id invalid" });
             }

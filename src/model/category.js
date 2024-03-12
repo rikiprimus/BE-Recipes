@@ -30,10 +30,10 @@ const getCategoryModel = async () => {
 
 const createCategory = async (data) => {
   console.log("model - createCategory")
-	let {id,name,description} = data
+	let {id,name} = data
 	console.log(data)
 	return new Promise((resolve,reject)=>
-		Pool.query(`INSERT INTO category (id, name, description, created_at) VALUES ('${id}','${name}', '${description}', NOW());`,(err,res)=>{
+		Pool.query(`INSERT INTO category (id, name, createdAt) VALUES ('${id}','${name}', NOW());`,(err,res)=>{
 			if(!err){
 				return resolve(res)
 			} else {
@@ -46,10 +46,10 @@ const createCategory = async (data) => {
 
 const updateCategory = async (data) => {
 	console.log("model - updateCategory")
-	let {id,name,description} = data
+	let {id,name} = data
 	console.log(data)
 	return new Promise((resolve,reject)=>
-		Pool.query(`UPDATE category SET updated_at=NOW(), name='${name}', description='${description}' WHERE id='${id}'`,(err,res)=>{
+		Pool.query(`UPDATE category SET updatedAt=NOW(), name='${name}' WHERE id='${id}'`,(err,res)=>{
 			if(!err){
 				return resolve(res)
 			} else {

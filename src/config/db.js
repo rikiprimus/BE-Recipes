@@ -2,8 +2,7 @@ const {Pool} = require("pg")
 // Mengatur konfigurasi dari file .env
 require("dotenv").config()
 
-
-// Membuat koneksi ke database
+// Konfigurasi Database
 const pool = new Pool({
 	host: process.env.DB_HOST,
 	user: process.env.DB_USER,
@@ -12,4 +11,4 @@ const pool = new Pool({
 	port: process.env.DB_PORT,
 })
 
-module.exports = pool
+module.exports = pool;
