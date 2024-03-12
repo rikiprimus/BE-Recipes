@@ -1,0 +1,795 @@
+{
+	"info": {
+		"_postman_id": "8bf726d1-d444-4407-984b-327063b4b602",
+		"name": "Recipe-BE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33105383"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Joe",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "08222222222",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "joe@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "joe",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let token = pm.request.headers.get('Cookie').split('=')[1];\r",
+									"\r",
+									"pm.environment.set(\"token\", token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\", \"\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "joe@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "joe",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lupa Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "lukyp@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/lupa_password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"lupa_password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category Delete (p)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/category/a62aba09-4e6c-4594-8b27-ca8a56714640",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"category",
+								"a62aba09-4e6c-4594-8b27-ca8a56714640"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category Create (p)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Appetizer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category Update (p)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Appetizer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/category/f74cf1ca-f742-45bc-b27b-e75f7b63babf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"category",
+								"f74cf1ca-f742-45bc-b27b-e75f7b63babf"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "Comment By Recipe",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "recipes_id",
+									"value": "ceb716a3-bfaf-48d7-a891-4ea34ad55a0c",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/comment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:3000/comment/ceb716a3-bfaf-48d7-a891-4ea34ad55a0c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comment",
+								"ceb716a3-bfaf-48d7-a891-4ea34ad55a0c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment Delete (p)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/comment/c3ea21d0-7d29-4b6e-bd11-12f58b0f5f5c?a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comment",
+								"c3ea21d0-7d29-4b6e-bd11-12f58b0f5f5c"
+							],
+							"query": [
+								{
+									"key": "a",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment Create (p)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "fill_comment",
+									"value": "Ngiler dah !",
+									"type": "text"
+								},
+								{
+									"key": "recipes_id",
+									"value": "081cf465-96b4-46ef-940e-3ee914c9430c",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/comment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment Update (p)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "fill_comment",
+									"value": "Keren",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/comment/c3ea21d0-7d29-4b6e-bd11-12f58b0f5f5c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comment",
+								"c3ea21d0-7d29-4b6e-bd11-12f58b0f5f5c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Recipe",
+			"item": [
+				{
+					"name": "Recipe",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/recipes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recipe Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/recipes/detail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipes",
+								"detail"
+							],
+							"query": [
+								{
+									"key": "searchBy",
+									"value": "title",
+									"description": "title | ingredient | category",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "DESC",
+									"description": "ASC | DESC",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "Dessert",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "updatedAt",
+									"description": "createdAt | updatedAt",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recipe By Id (p)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/recipes/e90e1633-d938-4f40-948a-b0c7cccb764a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipes",
+								"e90e1633-d938-4f40-948a-b0c7cccb764a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recipes Delete (p)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/recipes/e90e1633-d938-4f40-948a-b0c7cccb764a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipes",
+								"e90e1633-d938-4f40-948a-b0c7cccb764a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recipes Create (p)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Sup Labu Kuning",
+									"type": "text"
+								},
+								{
+									"key": "ingredient",
+									"value": "Labu, Kaldu ayam, Bawang Putih",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"description": "Main Course = ad3c939f-6976-4f7f-a477-619ee546c6fb",
+									"type": "file",
+									"src": "postman-cloud:///1eedebdd-9b3a-4b80-baec-01f89d7b8340"
+								},
+								{
+									"key": "video",
+									"value": "http://labukuning.com",
+									"description": "Dessert = f9f39283-a5c7-4d13-938e-5506b6fb2d8e",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "3ef5ca5d-1b01-49c2-840f-a204502fb63d",
+									"description": "Appetizer = 3ef5ca5d-1b01-49c2-840f-a204502fb63d",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/recipes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recipes Update (p)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Kue lapis",
+									"type": "text"
+								},
+								{
+									"key": "ingredient",
+									"value": "Tepung Terigu",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "postman-cloud:///1eedebdd-9b3a-4b80-baec-01f89d7b8340"
+								},
+								{
+									"key": "video",
+									"value": "yt.com",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/recipes/e90e1633-d938-4f40-948a-b0c7cccb764a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipes",
+								"e90e1633-d938-4f40-948a-b0c7cccb764a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "User By Id (p)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/users/id/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"id",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users Delete (p)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/users/id/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"id",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Profile Edit (p)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "photo_profile",
+									"type": "file",
+									"src": "postman-cloud:///1eedebae-9559-4f10-9f9d-f289e82f2dbf"
+								},
+								{
+									"key": "bio",
+									"value": "Aku adalah aku",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
