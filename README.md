@@ -4,6 +4,7 @@ Proyek Food-Recipes-Backend adalah API yang dibangun menggunakan framework Expre
 
 The Food-Recipes-Backend project is an API built using the Express.js framework to manage users, recipes, and categories data in an application. This API provides various key features including CRUD (Create, Read, Update, Delete) operations, sorting, searching, and pagination to efficiently manage data. The project also utilizes environment variable management (env) and comes with a Postman collection for API testing. PostgreSQL is used as the database for this project.
 
+![image](https://github.com/rikiprimus/BE-Recipes/assets/34765525/16ea1112-e4ad-459f-9b58-05a82a35df6c)
 
 
 ## Tools
@@ -22,6 +23,7 @@ git clone https://github.com/rikiprimus/BE-Recipes.git
 2. **Install Dependencies**: install all required dependencies and add 'dev' to the script section to use nodemon.
 ```
 npm install
+```
 ```
 "scripts": {
     "dev": "nodemon index.js",
