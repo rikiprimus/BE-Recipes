@@ -46,7 +46,7 @@ CLOUDINARY_API_SECRET=
 ```
 4. **Run Server**: Start the server with command.
 ```
-npm start
+npm run dev
 ```
 5. **Test API**: First, you need to import collections to Postman to test and explore the API.
 
