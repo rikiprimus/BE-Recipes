@@ -69,9 +69,6 @@ const AuthController = {
 		let isVerifyPassword = await argon2.verify(userData.password,password)
 		let token = generateToken(userData)
         let newToken = refreshToken(userData)
-        // console.log(res.header('Authorization', token))
-        // console.log('=====Headers=====')
-        // console.log(req.headers)
         res.cookie('token', token, { httpOnly: true });
         if(isVerifyPassword){
             userData.token = token,

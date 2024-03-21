@@ -133,7 +133,7 @@ const UsersController = {
     DeleteUser: async(req, res, next) => {
         try {
             // check params & body
-            let { id } = req.payload;
+            let id  = req.payload.id;
             if (!id) {
                 return res.status(404).json({ message: "params id invalid" });
             }
