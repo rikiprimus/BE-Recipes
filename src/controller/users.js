@@ -28,7 +28,7 @@ const UsersController = {
 
     getUserById: async (req, res, next) => {
         try {
-            let { id } = req.payload;
+            let { id } = req.params;
             console.log(id)
             if (id === "") {
                 return res.status(404).json({ message: "params id invalid" });
@@ -90,7 +90,7 @@ const UsersController = {
     PutUser: async (req, res, next) => {
         try {
             // check params & body
-            let { id } = req.payload;
+            let { id } = req.params;
             if (id === "") {
                 return res.status(404).json({ message: "params id invalid" });
             }
@@ -133,7 +133,7 @@ const UsersController = {
     DeleteUser: async(req, res, next) => {
         try {
             // check params & body
-            let id  = req.payload.id;
+            let id  = req.params.id;
             if (!id) {
                 return res.status(404).json({ message: "params id invalid" });
             }

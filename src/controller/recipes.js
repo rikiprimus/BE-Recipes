@@ -122,7 +122,7 @@ const RecipesController = {
             }
             
             let photo = imageUrl.secure_url
-            let users_id = req.payload.id
+            let users_id = req.params.id
             let { title, ingredient, video, category_id } = req.body;
             // console.log(title)
             

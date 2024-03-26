@@ -3,12 +3,11 @@ const jwt = require("jsonwebtoken");
 const protect = async (req, res, next) => {
   try {
     let key = process.env.JWT_KEY;
-    console.log(req.headers.authorization)
-    if (req.headers.authorization) {
-      let auth = req.headers.authorization;
+    console.log(req.headers['authorization'])
+    if (req.headers['authorization']) {
+      let auth = req.headers['authorization'];
       let Bearer = auth.split(" ");
-      
-      let decode = jwt.verify(Bearer.join(''), key);
+      let decode = jwt.verify(Bearer[1], key);
     
       req.payload = decode;
 

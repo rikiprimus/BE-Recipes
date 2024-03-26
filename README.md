@@ -23,6 +23,7 @@ git clone https://github.com/rikiprimus/BE-Recipes.git
 ```
 npm install
 ```
+```
 "scripts": {
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"

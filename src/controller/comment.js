@@ -53,7 +53,7 @@ const CommentsController = {
     InputComment: async (req, res, next) => {
         try {
             let { fill_comment, recipes_id } = req.body;
-            let users_id = req.payload.id
+            let users_id = req.params.id
             let data = { id: uuidv4(), fill_comment, recipes_id, users_id };
             let result = await createComment(data);
             if (result.rowCount === 1) {
