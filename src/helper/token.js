@@ -4,9 +4,9 @@ let key = process.env.JWT_KEY
 
 const generateToken = (payload) => {
 	const opVerify = {
-		expiresIn : '30m'
+		expiresIn : ''
 	}
-	const token = jwt.sign(payload, key, opVerify)
+	const token = jwt.sign(payload, key)
 	return token
 }
 

@@ -10,6 +10,7 @@ const protect = async (req, res, next) => {
       let decode = jwt.verify(Bearer[1], key);
     
       req.payload = decode;
+      console.log(req.payload)
 
       next();
     } else {

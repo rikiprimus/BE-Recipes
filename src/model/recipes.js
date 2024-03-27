@@ -32,7 +32,8 @@ const getRecipeDetailCountModel = async (data) => {
 const getRecipesModel = async () => {
 	console.log("model - getRecipesModel")
 	return new Promise((resolve,reject)=>
-		Pool.query(`SELECT * FROM recipes`,(err,res)=>{
+		Pool.query(`SELECT recipes.*, users.name, users.photo_profile FROM recipes
+		JOIN users ON recipes.users_id = users.id`,(err,res)=>{
 			if(!err){
 				return resolve(res)
 			} else {
@@ -45,7 +46,7 @@ const getRecipesModel = async () => {
 const getRecipeByIdModel = async (id) => {
 	console.log("model - getRecipeByIdModel")
 	return new Promise((resolve,reject)=>
-		Pool.query(`SELECT * FROM recipes WHERE id='${id}'`,(err,res)=>{
+		Pool.query(`SELECT recipes.*, users.name, users.photo_profile FROM recipes JOIN users ON recipes.users_id = users.id WHERE recipes.id='${id}'`,(err,res)=>{
 			if(!err){
 				return resolve(res)
 			} else {

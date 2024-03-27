@@ -7,7 +7,7 @@ async function validateFile(req, res, next) {
     return next()
   }
 
-  if (file.mimetype !== 'image/png' && file.mimetype !== 'image/jpeg') {
+  if (file.mimetype !== 'image/png' && file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/jpg') {
     return res.status(400).json({ message: 'Invalid file format, file only png/jpg' });
   }
 
