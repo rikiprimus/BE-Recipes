@@ -78,3 +78,4 @@ npm run dev
   - http://localhost:3000/category/id
 
 ## Deployed API
+https://recipefree.vercel.app/
