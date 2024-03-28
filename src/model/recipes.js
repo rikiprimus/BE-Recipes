@@ -57,6 +57,20 @@ const getRecipeByIdModel = async (id) => {
 	)
 }
 
+const getRecipeByUsersIdModel = async (users_id) => {
+	console.log("model - getRecipeByIdModel")
+	return new Promise((resolve,reject)=>
+		Pool.query(`SELECT recipes.*, users.name, users.photo_profile FROM recipes JOIN users ON recipes.users_id = users.id WHERE recipes.users_id='${users_id}'`,(err,res)=>{
+			if(!err){
+				return resolve(res)
+			} else {
+				console.log(`error db -`,err)
+				reject(err)
+			}
+		})
+	)
+}
+
 const createRecipe = async (data) => {
 	console.log("model - createRecipe")
 	let {id,title,ingredient,photo,video,users_id,category_id} = data
@@ -103,4 +117,4 @@ const deleteRecipe = async (id) => {
 	)
 }
 
-module.exports = {getRecipesModel,getRecipeByIdModel,createRecipe,updateRecipe,deleteRecipe,getRecipeDetailModel,getRecipeDetailCountModel}
+module.exports = {getRecipesModel,getRecipeByIdModel,createRecipe,updateRecipe,deleteRecipe,getRecipeDetailModel,getRecipeDetailCountModel, getRecipeByUsersIdModel}

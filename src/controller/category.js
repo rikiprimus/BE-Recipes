@@ -55,13 +55,11 @@ const CategoryController = {
     
     PutCategory: async (req, res, next) => {
         try {
-            // check params & body
             let { id } = req.params;
             if (id === "") {
                 return res.status(404).json({ message: "params id invalid" });
             }
             let { name } = req.body;
-            // check Category
             let categorys = await getCategoryByIdModel(id);
             let resultCategory = categorys.rows;
             if (!resultCategory.length) {
@@ -94,13 +92,11 @@ const CategoryController = {
 
     DeleteCategory: async(req, res, next) => {
         try {
-            // check params & body
             let { id } = req.params;
             if (!id) {
                 return res.status(404).json({ message: "params id invalid" });
             }
             
-            // check Category
             let category = await getCategoryByIdModel(id);
             let resultCategory = category.rows;
             if (!resultCategory.length) {

@@ -89,13 +89,12 @@ const UsersController = {
     
     PutUser: async (req, res, next) => {
         try {
-            // check params & body
             let { id } = req.params;
             if (id === "") {
                 return res.status(404).json({ message: "params id invalid" });
             }
             let { name, phone, email, password, photo_profile, bio } = req.body;
-            // check User
+
             let users = await getUserByIdModel(id);
             let resultUser = users.rows;
             if (!resultUser.length) {
@@ -132,13 +131,11 @@ const UsersController = {
 
     DeleteUser: async(req, res, next) => {
         try {
-            // check params & body
             let id  = req.params.id;
             if (!id) {
                 return res.status(404).json({ message: "params id invalid" });
             }
             
-            // check User
             let users = await getUserByIdModel(id);
             let resultUser = users.rows;
             if (!resultUser.length) {

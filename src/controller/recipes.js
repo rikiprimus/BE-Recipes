@@ -4,6 +4,7 @@ const {
 	getRecipeDetailCountModel,
     getRecipesModel,
     getRecipeByIdModel,
+    getRecipeByUsersIdModel,
     createRecipe,
     updateRecipe,
     deleteRecipe,
@@ -89,6 +90,31 @@ const RecipesController = {
                 .json({ message: "failed getRecipe Controller" });
         }
     },
+    getRecipeByUsersId: async (req, res, next) => {
+        try {
+            let { users_id } = req.params;
+            if (users_id === "") {
+                return res.status(404).json({ message: "params id invalid" });
+            }
+            let recipes = await getRecipeByUsersIdModel(users_id);
+            let result = recipes.rows;
+            if (!result.length) {
+                return res
+                    .status(404)
+                    .json({ message: "recipe not found or id invalid" });
+            }
+            console.log(result);
+            return res
+                .status(200)
+                .json({ message: "success getRecipeByUsersId", data: result });
+        } catch (err) {
+            console.log("getRecipeByUsersId error");
+            console.log(err);
+            return res
+                .status(404)
+                .json({ message: "failed getRecipeByUsersId Controller" });
+        }
+    },
     getRecipeById: async (req, res, next) => {
         try {
             let { id } = req.params;
@@ -100,7 +126,7 @@ const RecipesController = {
             if (!result.length) {
                 return res
                     .status(404)
-                    .json({ message: "recipe not found or id invalid" });
+                    .json({ message: "recipe by id not found or id invalid" });
             }
             console.log(result);
             return res
@@ -123,7 +149,6 @@ const RecipesController = {
             
             let photo = imageUrl.secure_url
             let { title, ingredient, video, users_id, category_id } = req.body;
-            // console.log(title)
             
             let data = { id: uuidv4(), title, ingredient, photo, video, users_id, category_id };
             let result = await createRecipe(data);
@@ -150,14 +175,13 @@ const RecipesController = {
                 return res.status(404).json({status:404, message:`input data image failed`})
             }
 
-            // check params & body
             let { id } = req.params;
             if (id === "") {
                 return res.status(404).json({ message: "params id invalid" });
             }
             let photo = imageUrl.secure_url
             let { title, ingredient, video, category_id } = req.body;
-            // check recipe
+
             let recipes = await getRecipeByIdModel(id);
             let resultRecipe = recipes.rows;
             if (!resultRecipe.length) {
@@ -192,13 +216,11 @@ const RecipesController = {
     },
     DeleteRecipe: async(req, res, next) => {
         try {
-            // check params & body
             let { id } = req.params;
             if (!id) {
                 return res.status(404).json({ message: "params id invalid" });
             }
             
-            // check recipe
             let recipes = await getRecipeByIdModel(id);
             let resultRecipe = recipes.rows;
             if (!resultRecipe.length) {

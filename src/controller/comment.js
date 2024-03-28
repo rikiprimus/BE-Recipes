@@ -10,7 +10,7 @@ const {
 const CommentsController = {
     getCommentByRecipe: async (req, res, next) => {
         try {
-            let {recipes_id} = req.body;
+            let {recipes_id} = req.params;
             let comments = await getCommentsByRecipeModel(recipes_id);
             let result = comments.rows;
             console.log(result);
@@ -74,13 +74,11 @@ const CommentsController = {
     },
     PutComment: async (req, res, next) => {
         try {
-            // check params & body
             let { id } = req.params;
             if (id === "") {
                 return res.status(404).json({ message: "params id invalid" });
             }
             let { fill_comment } = req.body;
-            // check comment
             let comments = await getCommentByIdModel(id);
             let resultComment = comments.rows;
             if (!resultComment.length) {
@@ -111,13 +109,11 @@ const CommentsController = {
     },
     DeleteComment: async(req, res, next) => {
         try {
-            // check params & body
             let { id } = req.params;
             if (!id) {
                 return res.status(404).json({ message: "params id invalid" });
             }
             
-            // check comment
             let comments = await getCommentByIdModel(id);
             let resultComment = comments.rows;
             if (!resultComment.length) {

@@ -8,12 +8,9 @@ const authMiddleware = require("../middleware/auth")
 router.get("/", RecipesController.getRecipe)
 router.get("/detail",RecipesController.getRecipeDetail)
 router.get("/:id", RecipesController.getRecipeById)
+router.get("/users/:users_id", RecipesController.getRecipeByUsersId)
 router.post("/", upload.single("photo"), validateFile, RecipesController.InputRecipe)
 router.put("/:id", upload.single("photo"), validateFile, RecipesController.PutRecipe)
 router.delete("/:id", RecipesController.DeleteRecipe)
-
-// router.post("/", authMiddleware.protect,upload.single("photo"), validateFile, RecipesController.InputRecipe)
-// router.put("/:id", authMiddleware.protect,upload.single("photo"), validateFile, RecipesController.PutRecipe)
-// router.delete("/:id", authMiddleware.protect,RecipesController.DeleteRecipe)
 
 module.exports = router
