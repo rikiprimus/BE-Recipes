@@ -2,8 +2,7 @@
 
 The Food-Recipes-Backend project is an API built using the Express.js framework to manage users, recipes, and categories data in an application. This API provides various key features including CRUD (Create, Read, Update, Delete) operations, sorting, searching, and pagination to efficiently manage data. The project also utilizes environment variable management (env) and comes with a Postman collection for API testing. PostgreSQL is used as the database for this project.
 
-![image](https://github.com/rikiprimus/BE-Recipes/assets/34765525/16ea1112-e4ad-459f-9b58-05a82a35df6c)
-
+![image](https://github.com/rikiprimus/BE-Recipes/assets/34765525/4d9ed1c2-91c8-4899-b2d7-cd1689648ddc)
 
 ## Tools
 1. Visual Studio Code
