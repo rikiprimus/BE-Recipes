@@ -1,3 +1,4 @@
+const { search } = require("../config/cloadinary")
 const Pool = require("../config/db")
 
 const getRecipeDetailModel = async (data) => {
@@ -5,7 +6,8 @@ const getRecipeDetailModel = async (data) => {
 	console.log("model - getRecipeDetailModel")
 	console.log(data)
 	return new Promise((resolve,reject)=>
-		Pool.query(`SELECT * FROM recipes WHERE ${searchBy} ILIKE '%${search}%' ORDER BY ${sortBy} ${sort} LIMIT ${limit} OFFSET ${offset}`,(err,res)=>{
+		Pool.query(`SELECT recipes.*, users.name, users.photo_profile FROM recipes
+		JOIN users ON recipes.users_id = users.id WHERE ${searchBy} ILIKE '%${search}%' ORDER BY ${sortBy} ${sort} LIMIT ${limit} OFFSET ${offset}`,(err,res)=>{
 			if(!err){
 				return resolve(res)
 			} else {
@@ -19,7 +21,8 @@ const getRecipeDetailCountModel = async (data) => {
 	let {searchBy,search} = data
 	console.log("model - getRecipeDetailCountModel")
 	return new Promise((resolve,reject)=>
-		Pool.query(`SELECT * FROM recipes WHERE ${searchBy} ILIKE '%${search}%'`,(err,res)=>{
+		Pool.query(`SELECT recipes.*, users.name, users.photo_profile FROM recipes
+		JOIN users ON recipes.users_id = users.id WHERE ${searchBy} ILIKE '%${search}%'`,(err,res)=>{
 			if(!err){
 				return resolve(res)
 			} else {
@@ -29,11 +32,15 @@ const getRecipeDetailCountModel = async (data) => {
 		})
 	)
 }
-const getRecipesModel = async () => {
+const getRecipesModel = async (data) => {
+	let {searchBy, search, sortBy, sort, limit, offset} = data
 	console.log("model - getRecipesModel")
 	return new Promise((resolve,reject)=>
 		Pool.query(`SELECT recipes.*, users.name, users.photo_profile FROM recipes
-		JOIN users ON recipes.users_id = users.id`,(err,res)=>{
+		JOIN users ON recipes.users_id = users.id 
+		WHERE ${searchBy} ILIKE '%${search}%' 
+		ORDER BY ${sortBy} ${sort} 
+		LIMIT ${limit} OFFSET ${offset}`,(err,res)=>{
 			if(!err){
 				return resolve(res)
 			} else {
@@ -57,10 +64,15 @@ const getRecipeByIdModel = async (id) => {
 	)
 }
 
-const getRecipeByUsersIdModel = async (users_id) => {
+const getRecipeByUsersIdModel = async (data) => {
+	let { users_id, searchBy, search, sortBy, sort, limit, offset } = data
 	console.log("model - getRecipeByIdModel")
 	return new Promise((resolve,reject)=>
-		Pool.query(`SELECT recipes.*, users.name, users.photo_profile FROM recipes JOIN users ON recipes.users_id = users.id WHERE recipes.users_id='${users_id}'`,(err,res)=>{
+		Pool.query(`SELECT recipes.*, users.name, users.photo_profile FROM recipes 
+		JOIN users ON recipes.users_id = users.id WHERE recipes.users_id='${users_id} 
+		AND ${searchBy} ILIKE '%${search}%' 
+		ORDER BY ${sortBy} ${sort} 
+		LIMIT ${limit} OFFSET ${offset}'`,(err,res)=>{
 			if(!err){
 				return resolve(res)
 			} else {

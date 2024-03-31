@@ -76,45 +76,102 @@ const RecipesController = {
     },
     getRecipe: async (req, res, next) => {
         try {
-            let recipes = await getRecipesModel();
+            let { searchBy, search, sortBy, sort } = req.query
+            let data = {
+                searchBy: searchBy || 'title',
+                search: search || '',
+                sortBy: sortBy || 'title',
+                sort: sort || 'ASC'
+            }
+            data.page = Number(req.query.page) || 1
+            data.limit = Number(req.query.limit) || 5
+            data.offset = (data.page - 1) * data.limit
+
+            let recipes = await getRecipesModel(data);
             let result = recipes.rows;
-            console.log(result);
+
+            let count = await getRecipeDetailCountModel(data);
+            let total = count.rowCount
+            let isTotalFake
+            if (total < data.limit) {
+                isTotalFake = 5
+            }
+			let page_next = data.page + 1
+			if(data.page >= Math.round(total/data.limit) || Math.round(isTotalFake/data.limit)){
+                page_next = 0
+			}
+            console.log(total/data.limit)
+			let pagination = {
+				page_total : Math.round(total/data.limit) || Math.round(isTotalFake/data.limit),
+				page_prev: data.page - 1,
+                page_current: data.page,
+				page_next: page_next,
+				total_data : total
+			}
+
             return res
                 .status(200)
-                .json({ message: "success getRecipe", data: result });
+                .json({ message: "success getRecipe", data: result, pagination });
         } catch (err) {
-            console.log("getRecip error");
+            console.log("getRecipe error");
             console.log(err);
             return res
                 .status(404)
                 .json({ message: "failed getRecipe Controller" });
         }
     },
-    getRecipeByUsersId: async (req, res, next) => {
-        try {
-            let { users_id } = req.params;
-            if (users_id === "") {
-                return res.status(404).json({ message: "params id invalid" });
-            }
-            let recipes = await getRecipeByUsersIdModel(users_id);
-            let result = recipes.rows;
-            if (!result.length) {
-                return res
-                    .status(404)
-                    .json({ message: "recipe not found or id invalid" });
-            }
-            console.log(result);
-            return res
-                .status(200)
-                .json({ message: "success getRecipeByUsersId", data: result });
-        } catch (err) {
-            console.log("getRecipeByUsersId error");
-            console.log(err);
-            return res
-                .status(404)
-                .json({ message: "failed getRecipeByUsersId Controller" });
-        }
-    },
+    // getRecipeByUsersId: async (req, res, next) => {
+    //     try {
+    //         let { users_id } = req.params;
+    //         if (users_id === "") {
+    //             return res.status(404).json({ message: "params id invalid" });
+    //         }
+    //         let { searchBy, search, sortBy, sort } = req.query
+    //         let data = {
+    //             users_id: users_id || '',
+    //             searchBy: searchBy || 'title',
+    //             search: search || '',
+    //             sortBy: sortBy || 'title',
+    //             sort: sort || 'ASC'
+    //         }
+    //         data.page = Number(req.query.page) || 1
+    //         data.limit = Number(req.query.limit) || 5
+    //         data.offset = (data.page - 1) * data.limit
+    //         let recipes = await getRecipeByUsersIdModel(data);
+    //         let result = recipes.rows;
+
+    //         let count = await getRecipeDetailCountModel(data);
+    //         let total = count.rowCount
+	// 		let page_next
+	// 		if(data.page <= Math.round(total/data.limit)){
+	// 			page_next = 0
+	// 		} else {
+	// 			page_next = data.page + 1
+	// 		}
+	// 		let pagination = {
+	// 			page_total : Math.round(total/data.limit),
+	// 			page_prev: data.page - 1,
+    //             page_current: data.page,
+	// 			page_next: page_next,
+	// 			total_data : total
+	// 		}
+
+    //         if (!result.length) {
+    //             return res
+    //                 .status(404)
+    //                 .json({ message: "recipe not found or id invalid" });
+    //         }
+    //         return res
+    //             .status(200)
+    //             .json({ message: "success getRecipeByUsersId", data: result, pagination });
+    //     } catch (err) {
+    //         console.log("getRecipeByUsersId error");
+    //         console.log(err);
+    //         return res
+    //             .status(404)
+    //             .json({ message: "failed getRecipeByUsersId Controller" });
+    //     }
+    // },
     getRecipeById: async (req, res, next) => {
         try {
             let { id } = req.params;
