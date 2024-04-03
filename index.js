@@ -12,7 +12,8 @@ app.use(helmet());
 app.use(xssClean());
 
 const corsOption = {
-	origin: "http://localhost:5173/",
+	origin: "*",
+    credentials: true,
 	optionSuccessStatus: 200,
 }
 
