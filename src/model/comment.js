@@ -1,9 +1,12 @@
-const Pool = require("../config/db")
+	const Pool = require("../config/db")
 
 const getCommentsByRecipeModel = async (recipes_id) => {
 	console.log("model - getCommentsModel")
 	return new Promise((resolve,reject)=>
-		Pool.query(`SELECT recipe_comment.* FROM recipe_comment JOIN recipes ON recipe_comment.recipes_id = recipes.id WHERE recipes.id = '${recipes_id}';`,(err,res)=>{
+		Pool.query(`SELECT recipe_comment.*, users.name, users.photo_profile  FROM recipe_comment 
+		JOIN recipes ON recipe_comment.recipes_id = recipes.id
+		JOIN users ON recipe_comment.users_id = users.id
+		WHERE recipes.id = '${recipes_id}';`,(err,res)=>{
 			if(!err){
 				return resolve(res)
 			} else {

@@ -12,8 +12,8 @@ app.use(helmet());
 app.use(xssClean());
 
 const corsOption = {
-	origin : '*',
-	optionSuccessStatus:200
+	origin: "*",
+	optionSuccessStatus: 200,
 }
 
 app.use(cors(corsOption))
