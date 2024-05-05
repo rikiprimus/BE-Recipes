@@ -32,7 +32,7 @@ const AuthController = {
                 otp
             };
 
-            let url = `http://localhost:3000/auth/activated/${id}/${otp}`
+            let url = `https://recipefree.vercel.app/auth/activated/${id}/${otp}`
 
             let sendOTP = await sendEmailActivated(email,url,name)
             
