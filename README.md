@@ -1,8 +1,21 @@
+## Table of Contents
+
+* [About the Project](#Project-Food-Recipes-Backend-with-ExpressJs)
+  * [Tools](#tools)
+  * [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Installation](#installation)
+  * [Features](#features)
+  * [Routes API to use](#Routes-API-to-use)
+* [Related Project](#related-project)
+* [Contact](#contact)
+
 # Project Food-Recipes-Backend with ExpressJs
 
 The Food-Recipes-Backend project is an API built using the Express.js framework to manage users, recipes, and categories data in an application. This API provides various key features including CRUD (Create, Read, Update, Delete) operations, sorting, searching, and pagination to efficiently manage data. The project also utilizes environment variable management (env) and comes with a Postman collection for API testing. PostgreSQL is used as the database for this project.
 
 ![image](https://github.com/rikiprimus/BE-Recipes/assets/34765525/4d9ed1c2-91c8-4899-b2d7-cd1689648ddc)
+
 
 ## Tools
 1. Visual Studio Code
@@ -12,7 +25,22 @@ The Food-Recipes-Backend project is an API built using the Express.js framework 
 5. Multer and Cloadinary for photo
 6. Postman for testing API
 
-## Instalasi dan Penggunaan:
+## Built With
+* [Node JS](https://nodejs.org/en/docs/)
+* [Express JS](https://expressjs.com/)
+* [Nodemailer Package](https://www.npmjs.com/package/nodemailer)
+* [Cloudinary](https://cloudinary.com/)
+* [Morgan Package](https://www.npmjs.com/package/morgan)
+* [DotEnv Package](https://www.npmjs.com/package/dotenv)
+* [JWT Package](https://www.npmjs.com/package/jsonwebtoken)
+* [UUID Package](https://www.npmjs.com/package/uuid)
+* [Multer Package](https://www.npmjs.com/package/multer)
+* [Argon2 Package](https://www.npmjs.com/package/argon2)
+* [Mime Types Package](https://www.npmjs.com/package/mime-types)
+
+# Getting Started
+
+## Installation
 1. **Clone Repository**: Clone this repository to your local system.
 ```
 git clone https://github.com/rikiprimus/BE-Recipes.git
@@ -77,5 +105,22 @@ npm run dev
   - http://localhost:3000/users/id
   - http://localhost:3000/category/id
 
-## Deployed API
-https://recipefree.vercel.app/
+# Contributing
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are greatly appreciated.
+1. Fork the Project
+2. Create your Feature Branch (git checkout -b your/branch)
+3. Commit your Changes (git commit -m 'Add some features')
+4. Push to the Branch (git push origin feature/yourbranch)
+5. Open a Pull Request
+
+# Related Project
+* [`Food Recipes Demo`](https://fe-recipe-rho.vercel.app/)
+* [`Food Recipes Rest API`](https://recipefree.vercel.app/)
+* [`Food Recipes Frontend Repository`](https://github.com/rikiprimus/BE-Recipes)
+
+# Contact
+
+Contributors names and contact info
+
+* AUTHOR
+  * Ricky Primus Saputra [@RickyPrimusSaputra](https://github.com/rikiprimus)
