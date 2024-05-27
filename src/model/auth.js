@@ -44,6 +44,22 @@ const createUser = async (data) => {
 	)
 }
 
+const changePassword = async (data) => {
+	console.log("model - Change Password User")
+	let {id, password} = data
+	console.log(data)
+	return new Promise((resolve,reject)=>
+		Pool.query(`UPDATE users SET updatedAt=NOW(), password='${password}' WHERE id='${id}'`,(err,res)=>{
+			if(!err){
+				return resolve(res)
+			} else {
+				console.log(`error db -`,err)
+				reject(err)
+			}
+		})
+	)
+}
+
 const activatedUser = async(id) => {
 	console.log("model - activatedUser")
 	return new Promise((resolve,reject)=>
@@ -58,4 +74,4 @@ const activatedUser = async(id) => {
 	)
 }
 
-module.exports = { createUser, getUserByIdModel, findUser, activatedUser }
+module.exports = { createUser, getUserByIdModel, findUser, activatedUser, changePassword }

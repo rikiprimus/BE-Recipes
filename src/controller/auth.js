@@ -1,8 +1,8 @@
 const { v4: uuidv4 } = require("uuid");
-const { findUser, createUser, activatedUser, getUserByIdModel } = require("../model/auth");
+const { findUser, createUser, activatedUser, getUserByIdModel, changePassword } = require("../model/auth");
 const argon2 = require("argon2")
 const {generateToken, refreshToken} = require("../helper/token");
-const { sendEmailActivated } = require("../helper/email");
+const { sendEmailActivated, sendLink } = require("../helper/email");
 
 const AuthController = {
     register: async (req, res, next) => {
@@ -97,6 +97,63 @@ const AuthController = {
         }
 		
 		return res.status(201).json({ status: 201, messages: "login gagal",});
+	},
+    forgotpassword: async (req, res, next) => {
+		let { email } = req.body;
+        if (!email || email == "") {
+            return res.status(401).json({ status: 401, messages: "email & password is required"});
+        }
+        let user = await findUser(email);
+        if (user.rowCount === 0) {
+            return res.status(401).json({ status: 401, messages: "email not register" });
+        }
+		let userData = user.rows[0]
+        if (userData && userData.is_verif === false) {
+            return res
+                .status(401)
+                .json({ status: 401, messages: "email not verified, please check your email to activated your account" });
+        }
+        let url = `https://fe-recipe-rho.vercel.app/change-password/${userData.id}`
+
+        let sendLinkDirect = await sendLink(email,url)
+
+        if(!sendLinkDirect){
+            return res
+            .status(401)
+            .json({ status: 401, messages: "forgot password failed when send email" });
+        }
+        return res.status(201).json({ status: 201, messages: "forgot password success please change your password" });
+	},
+    changepassword: async (req, res, next) => {
+        const { id, password } = req.body;
+
+        if (!id || !password) {
+            return res.status(400).json({ status: 400, message: "id & password are required" });
+        }
+
+        let user = await getUserByIdModel(id);
+
+        if (user.rowCount === 0) {
+            return res.status(401).json({ status: 401, messages: "email not register" });
+        }
+		let userData = user.rows[0]
+        if (userData && userData.is_verif === false) {
+            return res
+                .status(401)
+                .json({ status: 401, messages: "email not verified, please check your email to activated your account" });
+        }
+        const hashedPassword = await argon2.hash(password)
+        const data = {
+            id: id,
+            password: hashedPassword
+        }
+        let result = await changePassword(data);
+
+        if(!result) {
+            return res.status(401).json({ status: 401, messages: "failed change password" });
+        }
+
+        return res.status(201).json({ status: 201, messages: "change password success please login", data: [id, userData, password] });
 	},
     verification: async (req, res, next) => {
         let { id, otp } = req.params;

@@ -33,4 +33,14 @@ const sendEmailActivated = async (email_user, url, name) => {
 	return await sendMail(mailOption)
 }
 
-module.exports = {sendEmailActivated}
+const sendLink = async (email_user, url) => {
+	const mailOption = {
+		from: process.env.EMAIL_NAME,
+		to: email_user,
+		subject: `Change your password using the link below`,
+		text: `Link Forgot Password : ${url}`
+	}
+	return await sendMail(mailOption)
+}
+
+module.exports = {sendEmailActivated, sendLink}
