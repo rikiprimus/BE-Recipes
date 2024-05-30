@@ -1,8 +1,9 @@
 const { v4: uuidv4 } = require("uuid");
-const { findUser, createUser, activatedUser, getUserByIdModel, changePassword } = require("../model/auth");
+const { findUser, createUser, activatedUser, getUserByIdModel, changePassword, updatePinByEmail } = require("../model/auth");
 const argon2 = require("argon2")
 const {generateToken, refreshToken} = require("../helper/token");
-const { sendEmailActivated, sendLink } = require("../helper/email");
+const { sendEmailActivated, sendLink, sendPin } = require("../helper/email");
+const { generatePin } = require("../helper/pin");
 
 const AuthController = {
     register: async (req, res, next) => {
@@ -101,7 +102,7 @@ const AuthController = {
     forgotpassword: async (req, res, next) => {
 		let { email } = req.body;
         if (!email || email == "") {
-            return res.status(401).json({ status: 401, messages: "email & password is required"});
+            return res.status(401).json({ status: 401, messages: "email is required"});
         }
         let user = await findUser(email);
         if (user.rowCount === 0) {
@@ -123,6 +124,72 @@ const AuthController = {
             .json({ status: 401, messages: "forgot password failed when send email" });
         }
         return res.status(201).json({ status: 201, messages: "forgot password success please change your password" });
+	},
+    sendpin: async (req, res, next) => {
+		let { email } = req.body;
+        if (!email || email == "") {
+            return res.status(401).json({ status: 401, messages: "email is required"});
+        }
+        let user = await findUser(email);
+        if (user.rowCount === 0) {
+            return res.status(401).json({ status: 401, messages: "email not register" });
+        }
+		let userData = user.rows[0]
+        if (userData && userData.is_verif === false) {
+            return res
+                .status(401)
+                .json({ status: 401, messages: "email not verified, please check your email to activated your account" });
+        }
+        
+        const pin = generatePin()
+        let data = {
+            email : email,
+            pin : pin
+        };
+
+        let result = await updatePinByEmail(data)
+        if(!result){
+            return res.status(401).json({status:401, messages: 'update pin by email gagal'})
+        }
+
+        let sendPinDirect = await sendPin(email,pin)
+        if(!sendPinDirect){
+            return res
+            .status(401)
+            .json({ status: 401, messages: "Send PIN failed when send email" });
+        }
+        return res.status(201).json({ status: 201, messages: "Send PIN success" });
+	},
+    confirmpin: async (req, res, next) => {
+		let { email, pin } = req.body;
+        if (!email || email == "" & !pin || pin == "") {
+            return res.status(401).json({ status: 401, messages: "email & pin is required"});
+        }
+        let user = await findUser(email);
+        if (user.rowCount === 0) {
+            return res.status(401).json({ status: 401, messages: "email not register" });
+        }
+		let userData = user.rows[0]
+        if (userData && userData.is_verif === false) {
+            return res
+                .status(401)
+                .json({ status: 401, messages: "email not verified, please check your email to activated your account" });
+        }
+
+        if (userData.pin !== pin) {
+            return res.status(401).json({ status: 401, messages: "Pin wrong" });
+        }
+        let data = {
+            email : email,
+            pin : ""
+        };
+
+        let result = await updatePinByEmail(data)
+        if(!result){
+            return res.status(401).json({status:401, messages: 'update pin by email gagal'})
+        }
+
+        return res.status(201).json({ status: 201, messages: "Confirm PIN success please change your password" });
 	},
     changepassword: async (req, res, next) => {
         const { id, password } = req.body;

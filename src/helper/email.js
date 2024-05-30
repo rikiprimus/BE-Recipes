@@ -43,4 +43,14 @@ const sendLink = async (email_user, url) => {
 	return await sendMail(mailOption)
 }
 
-module.exports = {sendEmailActivated, sendLink}
+const sendPin = async (email_user, pin) => {
+	const mailOption = {
+		from: process.env.EMAIL_NAME,
+		to: email_user,
+		subject: `Change your password using code PIN below`,
+		text: `YOUR CODE PIN : ${pin}`
+	}
+	return await sendMail(mailOption)
+}
+
+module.exports = {sendEmailActivated, sendLink, sendPin}
