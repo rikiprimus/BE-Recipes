@@ -130,11 +130,6 @@ const RecipesController = {
             // console.log(recipes)
             let result = recipes.rows;
 
-            if (!result.length) {
-                return res
-                    .status(404)
-                    .json({ message: "recipe not found or id invalid" });
-            }
             return res
                 .status(200)
                 .json({ message: "success getRecipeByUsersId", data: result });
