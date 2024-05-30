@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
-const { findUser, createUser, activatedUser, getUserByIdModel, changePassword, updatePinByEmail } = require("../model/auth");
+const { findUser, createUser, activatedUser, getUserByIdModel, changePassword, updatePinByEmail, changepasswordbyemail, changePasswordByEmail } = require("../model/auth");
 const argon2 = require("argon2")
 const {generateToken, refreshToken} = require("../helper/token");
 const { sendEmailActivated, sendLink, sendPin } = require("../helper/email");
@@ -221,6 +221,35 @@ const AuthController = {
         }
 
         return res.status(201).json({ status: 201, messages: "change password success please login", data: [id, userData, password] });
+	},
+    changepasswordbyemail: async (req, res, next) => {
+        const { email, password } = req.body;
+
+        if (!email || email == "" & !password || password == "") {
+            return res.status(401).json({ status: 401, messages: "new password is required"});
+        }
+        let user = await findUser(email);
+        if (user.rowCount === 0) {
+            return res.status(401).json({ status: 401, messages: "email not register" });
+        }
+		let userData = user.rows[0]
+        if (userData && userData.is_verif === false) {
+            return res
+                .status(401)
+                .json({ status: 401, messages: "email not verified, please check your email to activated your account" });
+        }
+        const hashedPassword = await argon2.hash(password)
+        const data = {
+            email: email,
+            password: hashedPassword
+        }
+        let result = await changePasswordByEmail(data);
+
+        if(!result) {
+            return res.status(401).json({ status: 401, messages: "failed change password" });
+        }
+
+        return res.status(201).json({ status: 201, messages: "change password success please login"});
 	},
     verification: async (req, res, next) => {
         let { id, otp } = req.params;

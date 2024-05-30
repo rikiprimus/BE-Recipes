@@ -9,6 +9,7 @@ router.post('/forgotpassword',AuthController.forgotpassword)
 router.post('/sendpin',AuthController.sendpin)
 router.post('/confirmpin',AuthController.confirmpin)
 router.post('/changepassword',AuthController.changepassword)
+router.post('/changepasswordbyemail',AuthController.changepasswordbyemail)
 router.get('/activated/:id/:otp',AuthController.verification)
 
 module.exports = router
