@@ -64,15 +64,11 @@ const getRecipeByIdModel = async (id) => {
 	)
 }
 
-const getRecipeByUsersIdModel = async (data) => {
-	let { users_id, searchBy, search, sortBy, sort, limit, offset } = data
+const getRecipeByUsersIdModel = async (user_id) => {
 	console.log("model - getRecipeByIdModel")
 	return new Promise((resolve,reject)=>
 		Pool.query(`SELECT recipes.*, users.name, users.photo_profile FROM recipes 
-		JOIN users ON recipes.users_id = users.id WHERE recipes.users_id='${users_id} 
-		AND ${searchBy} ILIKE '%${search}%' 
-		ORDER BY ${sortBy} ${sort} 
-		LIMIT ${limit} OFFSET ${offset}'`,(err,res)=>{
+		JOIN users ON recipes.users_id = users.id WHERE recipes.users_id='${user_id}'`,(err,res)=>{
 			if(!err){
 				return resolve(res)
 			} else {
