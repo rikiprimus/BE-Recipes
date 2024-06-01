@@ -8,6 +8,8 @@ const Router = require("./src/routes")
 const app = express();
 const port = 3000;
 
+app.use(helmet());
+app.use(xssClean());
 
 const corsOption = {
 	origin: true,
@@ -16,8 +18,6 @@ const corsOption = {
 }
 
 app.use(cors(corsOption))
-app.use(helmet());
-app.use(xssClean());
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(morgan("combined"))

@@ -7,6 +7,7 @@ const {
     updateUser,
     deleteUser
 } = require("../model/users")
+const cloadinary = require("../config/cloadinary")
 
 const UsersController = {
     getUsers: async (req, res, next) => {
@@ -89,11 +90,19 @@ const UsersController = {
     
     PutUser: async (req, res, next) => {
         try {
+            const imageUrl = await cloadinary.uploader.upload(req.file.path,{folder:'my_folder_BE'})
+            if(!imageUrl){
+                return res.status(404).json({status:404, message:`input data image failed`})
+            }
             let { id } = req.params;
             if (id === "") {
                 return res.status(404).json({ message: "params id invalid" });
             }
-            let { name, phone, email, password, photo_profile, bio } = req.body;
+            let { name, phone, email, password, bio } = req.body;
+            
+            let photo_profile = imageUrl.secure_url
+            // Log incoming data for debugging
+            console.log("Incoming data:", photo_profile);
 
             let users = await getUserByIdModel(id);
             let resultUser = users.rows;
@@ -112,7 +121,8 @@ const UsersController = {
                 photo_profile: photo_profile || user.photo_profile,
                 bio: bio || user.bio,
             };
-
+            // Log the final data that will be sent to updateUser
+            console.log("Final data to update:", data);
             let result = await updateUser(data);
             if (result.rowCount === 1) {
                 return res

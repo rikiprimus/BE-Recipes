@@ -47,7 +47,7 @@ const createUser = async (data) => {
 const updateUser = async (data) => {
 	console.log("model - updateUser")
 	let {id,name,phone,email,password, photo_profile, bio} = data
-	console.log(data)
+	// console.log(data)
 	return new Promise((resolve,reject)=>
 		Pool.query(`UPDATE users SET updatedAt=NOW(), name='${name}', phone='${phone}', email='${email}', password='${password}', photo_profile='${photo_profile}', bio='${bio}' WHERE id='${id}'`,(err,res)=>{
 			if(!err){
