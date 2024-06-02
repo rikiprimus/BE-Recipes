@@ -19,22 +19,22 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "Joe",
+									"value": "Ricky Primus Saputra",
 									"type": "text"
 								},
 								{
 									"key": "phone",
-									"value": "08222222222",
+									"value": "08444555555",
 									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "joe@gmail.com",
+									"value": "caca@gmail.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "joe",
+									"value": "caca",
 									"type": "text"
 								}
 							]
@@ -63,7 +63,26 @@
 								"exec": [
 									"let token = pm.request.headers.get('Cookie').split('=')[1];\r",
 									"\r",
-									"pm.environment.set(\"token\", token);"
+									"pm.environment.set(\"token\", token);",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Token in data object is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.data).to.be.an('object');",
+									"    pm.expect(responseData.data.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should be a non-empty string\");",
+									"});",
+									"",
+									""
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -91,12 +110,12 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "joe@gmail.com",
+									"value": "rikiprimus33@gmail.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "joe",
+									"value": "riki",
 									"type": "text"
 								}
 							]
@@ -117,8 +136,33 @@
 					"response": []
 				},
 				{
-					"name": "Lupa Password",
+					"name": "Forgot Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -126,20 +170,299 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "lukyp@gmail.com",
+									"value": "rikiprimus33@gmail.com",
 									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "lukytaro4",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/lupa_password",
+							"raw": "http://localhost:3000/auth/forgotpassword",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"lupa_password"
+								"auth",
+								"forgotpassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Pin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "rikiprimus33@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/sendpin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"sendpin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Pin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "rikiprimus33@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "pin",
+									"value": "445291",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/confirmpin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"confirmpin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "7da75c09-2aa4-48cd-927b-e5653ed5c6ea",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "rikiprimus33@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "riki",
+									"type": "text"
+								},
+								{
+									"key": "confirmpassword",
+									"value": "riki",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/changepasswordbyemail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"changepasswordbyemail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OTP",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let token = pm.request.headers.get('Cookie').split('=')[1];\r",
+									"\r",
+									"pm.environment.set(\"token\", token);",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Token in data object is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.data).to.be.an('object');",
+									"    pm.expect(responseData.data.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should be a non-empty string\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\", \"\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "nidra@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "nidra",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/d2ce1e56-2f4d-457e-beb3-b4cb59fc110b/7d627623-8c10-4d00-9590-8d91dcc38161",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"d2ce1e56-2f4d-457e-beb3-b4cb59fc110b",
+								"7d627623-8c10-4d00-9590-8d91dcc38161"
 							]
 						}
 					},
@@ -153,6 +476,16 @@
 				{
 					"name": "Category",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -277,6 +610,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -284,20 +627,23 @@
 							"urlencoded": [
 								{
 									"key": "recipes_id",
-									"value": "ceb716a3-bfaf-48d7-a891-4ea34ad55a0c",
-									"type": "text"
+									"value": "70d9d898-1d33-4270-b850-eeabf4bab47e",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/comment",
+							"raw": "http://localhost:3000/comment/recipes/15272f06-eb5f-4c1f-8109-82bc9b43a48f",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"comment"
+								"comment",
+								"recipes",
+								"15272f06-eb5f-4c1f-8109-82bc9b43a48f"
 							]
 						}
 					},
@@ -365,12 +711,23 @@
 				{
 					"name": "Comment Create (p)",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
 								"value": "{{token}}",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -378,12 +735,12 @@
 							"urlencoded": [
 								{
 									"key": "fill_comment",
-									"value": "Ngiler dah !",
+									"value": "Enak ! ssssui",
 									"type": "text"
 								},
 								{
 									"key": "recipes_id",
-									"value": "081cf465-96b4-46ef-940e-3ee914c9430c",
+									"value": "70d9d898-1d33-4270-b850-eeabf4bab47e",
 									"type": "text"
 								}
 							]
@@ -449,14 +806,42 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/recipes",
+							"raw": "http://localhost:3000/recipes/detail?searchBy=title&sortBy=createdAt&sort=DESC&limit=0&page=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"recipes"
+								"recipes",
+								"detail"
+							],
+							"query": [
+								{
+									"key": "searchBy",
+									"value": "title"
+								},
+								{
+									"key": "search",
+									"value": "ayam",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "sort",
+									"value": "DESC"
+								},
+								{
+									"key": "limit",
+									"value": "0"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -468,7 +853,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/recipes/detail",
+							"raw": "http://localhost:3000/recipes/detail?searchBy=title&search=bubur&sortBy=createdAt&sort=DESC&limit=100&page=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -482,35 +867,29 @@
 								{
 									"key": "searchBy",
 									"value": "title",
-									"description": "title | ingredient | category",
-									"disabled": true
+									"description": "title | ingredient | category"
+								},
+								{
+									"key": "search",
+									"value": "bubur"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt",
+									"description": "createdAt | updatedAt"
 								},
 								{
 									"key": "sort",
 									"value": "DESC",
-									"description": "ASC | DESC",
-									"disabled": true
+									"description": "ASC | DESC"
 								},
 								{
 									"key": "limit",
-									"value": "2",
-									"disabled": true
+									"value": "100"
 								},
 								{
 									"key": "page",
-									"value": "2",
-									"disabled": true
-								},
-								{
-									"key": "search",
-									"value": "Dessert",
-									"disabled": true
-								},
-								{
-									"key": "sortBy",
-									"value": "updatedAt",
-									"description": "createdAt | updatedAt",
-									"disabled": true
+									"value": "1"
 								}
 							]
 						}
@@ -520,16 +899,61 @@
 				{
 					"name": "Recipe By Id (p)",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
 								"value": "{{token}}",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/recipes/e90e1633-d938-4f40-948a-b0c7cccb764a",
+							"raw": "https://recipefree.vercel.app/recipes/ ",
+							"protocol": "https",
+							"host": [
+								"recipefree",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"recipes",
+								" "
+							],
+							"query": [
+								{
+									"key": ":id",
+									"value": "76439eb2-ab64-4cab-95e4-c851423c27e9",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recipe By Users_id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/recipes/user/7da75c09-2aa4-48cd-927b-e5653ed5c6ea",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -537,7 +961,8 @@
 							"port": "3000",
 							"path": [
 								"recipes",
-								"e90e1633-d938-4f40-948a-b0c7cccb764a"
+								"user",
+								"7da75c09-2aa4-48cd-927b-e5653ed5c6ea"
 							]
 						}
 					},
@@ -550,12 +975,11 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
+								"value": "{{token}}"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/recipes/e90e1633-d938-4f40-948a-b0c7cccb764a",
+							"raw": "http://localhost:3000/recipes/2764e41a-54e0-4640-b569-440076e13c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -563,7 +987,7 @@
 							"port": "3000",
 							"path": [
 								"recipes",
-								"e90e1633-d938-4f40-948a-b0c7cccb764a"
+								"2764e41a-54e0-4640-b569-440076e13c"
 							]
 						}
 					},
@@ -577,7 +1001,7 @@
 							{
 								"key": "Authorization",
 								"value": "{{token}}",
-								"type": "text"
+								"disabled": true
 							}
 						],
 						"body": {
@@ -585,29 +1009,35 @@
 							"formdata": [
 								{
 									"key": "title",
-									"value": "Sup Labu Kuning",
+									"value": "Pempek",
 									"type": "text"
 								},
 								{
 									"key": "ingredient",
-									"value": "Labu, Kaldu ayam, Bawang Putih",
+									"value": "Ayam, Kecap manis, Gula, Air Jeruk, Minyak",
 									"type": "text"
 								},
 								{
 									"key": "photo",
 									"description": "Main Course = ad3c939f-6976-4f7f-a477-619ee546c6fb",
 									"type": "file",
-									"src": "postman-cloud:///1eedebdd-9b3a-4b80-baec-01f89d7b8340"
+									"src": "ayam bakar kecap.jpg"
 								},
 								{
 									"key": "video",
-									"value": "http://labukuning.com",
+									"value": "http://ayambakar.com",
 									"description": "Dessert = f9f39283-a5c7-4d13-938e-5506b6fb2d8e",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "users_id",
+									"value": "7da75c09-2aa4-48cd-927b-e5653ed5c6ea",
 									"type": "text"
 								},
 								{
 									"key": "category_id",
-									"value": "3ef5ca5d-1b01-49c2-840f-a204502fb63d",
+									"value": "{{Main Course}}",
 									"description": "Appetizer = 3ef5ca5d-1b01-49c2-840f-a204502fb63d",
 									"type": "text"
 								}
@@ -635,7 +1065,8 @@
 							{
 								"key": "Authorization",
 								"value": "{{token}}",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -643,33 +1074,39 @@
 							"formdata": [
 								{
 									"key": "title",
-									"value": "Kue lapis",
+									"value": "Pizza Saus Padang",
 									"type": "text"
 								},
 								{
 									"key": "ingredient",
-									"value": "Tepung Terigu",
-									"type": "text"
+									"value": "Sosis, Saus tomat, Keju Mozarella, Minyak Zaitun, Garam",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "photo",
+									"description": "{{Main Course}}",
 									"type": "file",
-									"src": "postman-cloud:///1eedebdd-9b3a-4b80-baec-01f89d7b8340"
+									"src": "postman-cloud:///1eeeb6dd-ff28-4680-987b-34e7f2cdc4a8"
 								},
 								{
 									"key": "video",
 									"value": "yt.com",
-									"type": "text"
+									"description": "{{Dessert}}",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "category_id",
-									"value": "3",
-									"type": "text"
+									"value": "{{Appetizer}}",
+									"description": "{{Appetizer}}",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/recipes/e90e1633-d938-4f40-948a-b0c7cccb764a",
+							"raw": "http://localhost:3000/recipes/76439eb2-ab64-4cab-95e4-c851423c27e9",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -677,7 +1114,7 @@
 							"port": "3000",
 							"path": [
 								"recipes",
-								"e90e1633-d938-4f40-948a-b0c7cccb764a"
+								"76439eb2-ab64-4cab-95e4-c851423c27e9"
 							]
 						}
 					},
@@ -691,16 +1128,25 @@
 				{
 					"name": "User By Id (p)",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdkYTc1YzA5LTJhYTQtNDhjZC05MjdiLWU1NjUzZWQ1YzZlYSIsIm5hbWUiOiJyaWtpIiwicGhvbmUiOiIwODc3NjI2MzYzNyIsImVtYWlsIjoicmlraXByaW11czMzQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJGFyZ29uMmlkJHY9MTkkbT02NTUzNix0PTMscD00JG9ZSnprcUtESnBMZURxN3JQcW5sTHckQ2ZnQ283TU9mV2xaK3dzcWF0U0pnWGJzMDMzWEcrdytpUWNQVDZkZnYzRSIsInJvbGUiOiJ1c2VyIiwicGhvdG9fcHJvZmlsZSI6Imh0dHBzOi8vcmVzLmNsb3VkaW5hcnkuY29tL2RhMWlsbWNqOS9pbWFnZS91cGxvYWQvdjE3MTE0NTU1MzYvbXlfZm9sZGVyX0JFL2d4NzdjM3FpdHVpdmlxcmVnd3EzIiwiYmlvIjoibnVsbCIsImNyZWF0ZWRhdCI6IjIwMjQtMDUtMDVUMTQ6NDk6MjkuMjI1WiIsInVwZGF0ZWRhdCI6IjIwMjQtMDYtMDFUMTc6NDY6MzIuNDg3WiIsImlzX3ZlcmlmIjp0cnVlLCJvdHAiOiI1NDI1MGY0ZS01YzZiLTQ1MjAtYjdlOC00MTYwNjA1NGI2ODUiLCJwaW4iOiIiLCJpYXQiOjE3MTcyMzUyMDd9.LpZvvzGvJZpgsfIjGIMx18jhtWjVmvDooch1BbmtDz0",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
+								"value": "{{token}}"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/users/id/",
+							"raw": "http://localhost:3000/users/7da75c09-2aa4-48cd-927b-e5653ed5c6ea",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -708,35 +1154,7 @@
 							"port": "3000",
 							"path": [
 								"users",
-								"id",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Users Delete (p)",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3000/users/id/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"users",
-								"id",
-								""
+								"7da75c09-2aa4-48cd-927b-e5653ed5c6ea"
 							]
 						}
 					},
@@ -745,12 +1163,21 @@
 				{
 					"name": "Profile Edit (p)",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdkYTc1YzA5LTJhYTQtNDhjZC05MjdiLWU1NjUzZWQ1YzZlYSIsIm5hbWUiOiJyaWtpIiwicGhvbmUiOiIwODc3NjI2MzYzNyIsImVtYWlsIjoicmlraXByaW11czMzQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJGFyZ29uMmlkJHY9MTkkbT02NTUzNix0PTMscD00JG9ZSnprcUtESnBMZURxN3JQcW5sTHckQ2ZnQ283TU9mV2xaK3dzcWF0U0pnWGJzMDMzWEcrdytpUWNQVDZkZnYzRSIsInJvbGUiOiJ1c2VyIiwicGhvdG9fcHJvZmlsZSI6Imh0dHBzOi8vcmVzLmNsb3VkaW5hcnkuY29tL2RhMWlsbWNqOS9pbWFnZS91cGxvYWQvdjE3MTE0NTU1MzYvbXlfZm9sZGVyX0JFL2d4NzdjM3FpdHVpdmlxcmVnd3EzIiwiYmlvIjpudWxsLCJjcmVhdGVkYXQiOiIyMDI0LTA1LTA1VDE0OjQ5OjI5LjIyNVoiLCJ1cGRhdGVkYXQiOiIyMDI0LTA1LTMxVDIwOjI4OjQ0LjQ2M1oiLCJpc192ZXJpZiI6dHJ1ZSwib3RwIjoiNTQyNTBmNGUtNWM2Yi00NTIwLWI3ZTgtNDE2MDYwNTRiNjg1IiwicGluIjoiIiwiaWF0IjoxNzE3MTc5MjgwfQ.MDJxb5L1zwKRsfQdHHJPllEEF_m4WKm6ZRJ0I9lSiZE",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -770,12 +1197,13 @@
 								{
 									"key": "bio",
 									"value": "Aku adalah aku",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/users/id",
+							"raw": "http://localhost:3000/users/7da75c09-2aa4-48cd-927b-e5653ed5c6ea",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -783,13 +1211,27 @@
 							"port": "3000",
 							"path": [
 								"users",
-								"id"
+								"7da75c09-2aa4-48cd-927b-e5653ed5c6ea"
 							]
 						}
 					},
 					"response": []
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "Main Course",
+			"value": "3ef5ca5d-1b01-49c2-840f-a204502fb63d"
+		},
+		{
+			"key": "Dessert",
+			"value": "f9f39283-a5c7-4d13-938e-5506b6fb2d8e"
+		},
+		{
+			"key": "Appetizer",
+			"value": "3ef5ca5d-1b01-49c2-840f-a204502fb63d"
 		}
 	]
 }
