@@ -114,9 +114,9 @@ Contributions are what make the open source community such an amazing place to b
 5. Open a Pull Request
 
 # Related Project
-* [`Food Recipes Demo`](https://fe-recipe-rho.vercel.app/)
-* [`Food Recipes Rest API`](https://recipefree.vercel.app/)
-* [`Food Recipes Frontend Repository`](https://github.com/rikiprimus/BE-Recipes)
+* [`FE Recipefree Demo`](https://fe-recipe-rho.vercel.app/)
+* [`BE Recipefree Rest API`](https://recipefree.vercel.app/)
+* [`FE Recipefree Frontend Repository`](https://github.com/rikiprimus/FE-Recipes)
 
 # Contact
 
